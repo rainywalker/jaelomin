@@ -1,19 +1,15 @@
 {
   "name": "jaelomin",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/rainywalker/jaelomin.git",
+  "author": "jaelomin <jaelomin@urbanbase.com>",
+  "license": "MIT",
   "dependencies": {
-    "body-parser": "~1.18.2",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
     "dotenv": "^5.0.1",
-    "ejs": "~2.5.7",
-    "express": "~4.15.5",
-    "mongoose": "^5.0.8",
-    "morgan": "~1.9.0",
-    "serve-favicon": "~2.4.5"
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.0.9"
   }
 }
