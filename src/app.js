@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 
 
 const api  = require('./api');
-
+const port = process.env.PORT || 3000;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.mongo_URI)
@@ -39,6 +39,6 @@ router.get('/about', (ctx, next) => {
 app.use(router.routes()).use(router.allowedMethods)
 
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('server running on localhost:3000')
 })
