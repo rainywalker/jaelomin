@@ -6,6 +6,7 @@ const postCtrl  = require('./posts.controller');
 
 post.post('/', postCtrl.create)
 post.get('/', postCtrl.list)
-post.get('/:id', postCtrl.get)
+post.get('/', postCtrl.list)
+post.put('/:id', postCtrl.replace)
 
 module.exports = post;

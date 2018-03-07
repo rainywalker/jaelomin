@@ -1,4 +1,7 @@
 const Post = require('models/post');
+const Joi = require('joi');
+const { Types : { ObjectId } } = require('mongoose');
+
 
 
 exports.create  = async (ctx) => {
@@ -77,4 +80,62 @@ exports.delete = async (ctx) => {
         }
     }
     ctx.status = 204;
+}
+
+exports.replace = async (ctx) => {
+    const {id} = ctx.params;
+    if(!ObjectId.isValid(id)) {
+        stx.status = 400;
+        return
+    }
+    const schema = Joi.object().keys({
+        title: Joi.string().required(),
+        authors: Joi.array().items(Joi.object().keys({
+            name: Joi.string().required(),
+            email: Joi.string().email().required()
+        })),
+        desc: Joi.string().required(),
+        tags: Joi.array().items((Joi.string()).required())
+    });
+
+    const result = Joi.validate(ctx.request.body, schema);
+
+    if(result.error) {
+        ctx.status = 400; // Bad Request
+        ctx.body = result.error;
+        return;
+    }
+
+    let post;
+
+    try {
+        post = await Post.findByIdAndUpdate(id, ctx.request.body, {
+            upsert : true,
+            new : true
+        })
+    }
+    catch(e) {
+        return ctx.throw(500,e)
+    }
+    ctx.body = post;
+}
+
+exports.update = async (ctx) => {
+    const {id} = ctx.params;
+    if(ObjectId.isValid(id)) {
+        ctx.status = 400;
+        return
+    }
+
+    let post;
+
+    try {
+        post = await Post.findByIdAndUpdate(id, ctx.request.body, {
+            new : true
+        })
+    }
+    catch(e) {
+        return ctx.throw(500,e)
+    }
+    ctx.body = post
 }
