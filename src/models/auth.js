@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const crypto = require('crypto');
+const {generateToken} = require('lib/token');
 
 function hash (pw) {
     return crypto.createHmac('sha256', process.env.SECRET_KEY).update(pw).digest('hex')
@@ -70,6 +71,16 @@ Auth.statics.localRegister = function({ username, email, password }) {
 Auth.methods.validatePassword = function(password){
     const hashed = hash(password);
     return this.password === hashed;
+};
+
+Auth.methods.generateToken = function() {
+    // JWT 에 담을 내용
+    const payload = {
+        _id: this._id,
+        profile: this.profile
+    };
+
+    return generateToken(payload, 'account');
 };
 
 module.exports = mongoose.model('Auth', Auth);
