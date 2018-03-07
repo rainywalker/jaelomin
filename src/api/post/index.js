@@ -1,12 +1,11 @@
 const Router = require('koa-router');
 
 const post = new Router();
-const foo  = require('./posts.controller');
-post.get('/', (ctx, next) => {
-    ctx.body = 'xxxx GET ' + ctx.request.path;
-});
+const postCtrl  = require('./posts.controller');
 
 
-post.post('/', foo.create)
+post.post('/', postCtrl.create)
+post.get('/', postCtrl.list)
+post.get('/:id', postCtrl.get)
 
 module.exports = post;

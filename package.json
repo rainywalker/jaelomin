@@ -5,12 +5,13 @@
   "repository": "https://github.com/rainywalker/jaelomin.git",
   "author": "jaelomin <jaelomin@urbanbase.com>",
   "license": "MIT",
-  "scripts" : {
-    "start" : "NODE_PATH=src node src/app.js",
-    "dev" : "NODE_PATH=src pm2 start src/app.js --watch"
+  "scripts": {
+    "start": "NODE_PATH=src node src/app.js",
+    "dev": "NODE_PATH=src pm2 start src/app.js --watch"
   },
   "dependencies": {
     "dotenv": "^5.0.1",
+    "joi": "^13.1.2",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-logger": "^3.1.0",
