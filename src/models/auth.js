@@ -35,5 +35,41 @@ const Auth = new Schema({
 
 })
 
+Auth.statics.findByUserName = function(username) {
+    return this.findOne({
+        'profile.username' : username
+    }).exec();
+};
+
+Auth.statics.findByEmail = function(email) {
+    return this.findOne({email}).exec();
+};
+
+Auth.statics.findByEmailOrUsername = function({username, email}) {
+    return this.findOne({
+        $or: [
+            { 'profile.username': username },
+            { email }
+        ]
+    }).exec();
+};
+
+Auth.statics.localRegister = function({ username, email, password }) {
+
+    const account = new this({
+        profile: {
+            username
+        },
+        email,
+        password: hash(password)
+    });
+
+    return account.save();
+};
+
+Auth.methods.validatePassword = function(password){
+    const hashed = hash(password);
+    return this.password === hashed;
+};
 
 module.exports = mongoose.model('Auth', Auth);
