@@ -7,7 +7,7 @@ const generateToken = payload => {
             payload,
             jwtSecret,
             {
-                expireIn : '7d'
+                expiresIn : '7d'
             }, (error, token) => {
                 if (error) reject(error);
                 resolve(token)
